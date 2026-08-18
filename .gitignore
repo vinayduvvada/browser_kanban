@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+*.log
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

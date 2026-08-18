@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Manager — Settings</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --bg: #f1f5f9;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    [data-theme="dark"] {
+      --primary: #818cf8;
+      --primary-hover: #6366f1;
+      --primary-light: rgba(129,140,248,0.12);
+      --surface: #1e293b;
+      --surface-alt: #0f172a;
+      --bg: #0f172a;
+      --border: #334155;
+      --border-light: #1e293b;
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --success: #34d399;
+      --danger: #f87171;
+      --danger-bg: rgba(248,113,113,0.1);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      display: inline-flex;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .theme-btn {
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .theme-btn:hover { color: var(--text); }
+    .theme-btn.active { background: var(--primary-light); color: var(--primary); }
+    .theme-btn svg { width: 15px; height: 15px; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ── Top Bar ── */
+    .top-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .top-bar h1 {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top-bar h1 svg { color: var(--primary); flex-shrink: 0; }
+    .top-bar-actions { display: flex; gap: 8px; align-items: center; }
+
+    .back-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .back-btn:hover { color: var(--text); background: var(--surface-alt); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    /* ── Main ── */
+    .main-content {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 32px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: visible;
+    }
+    .card + .card { margin-top: 16px; }
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .card-header svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+    .card-body { padding: 20px; }
+
+    /* ── Form ── */
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .field-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-width: 140px;
+      flex-shrink: 0;
+    }
+    input[type="text"],
+    input[type="number"],
+    select {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      outline: none;
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    input[type="text"]::placeholder { color: var(--text-muted); }
+    input[type="text"] { flex: 1; }
+    input[type="number"] { width: 80px; }
+    select { background: var(--surface); }
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+      accent-color: var(--primary);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-secondary);
+    }
+    .btn:hover { background: var(--surface-alt); color: var(--text); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover { background: var(--primary-hover); color: white; }
+
+    .btn-secondary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: transparent;
+    }
+    .btn-secondary:hover { background: var(--border); color: var(--text); }
+
+    .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .status {
+      font-size: 13px;
+      color: var(--success);
+      min-height: 18px;
+    }
+
+    /* ── Kanban State Rows ── */
+    .state-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding: 8px 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+    }
+    .state-row .state-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      width: 18px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .state-row input[type="text"] {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+    .state-row input[type="color"] {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 2px;
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .state-remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .state-remove-btn:hover { color: var(--danger); background: var(--danger-bg); }
+    .state-remove-btn svg { width: 14px; height: 14px; }
+
+    /* ── Field hints ── */
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: -4px;
+      margin-bottom: 12px;
+      padding-left: 150px;
+    }
+    .field-hint.no-indent { padding-left: 0; }
+
+    /* ── Conditional fields ── */
+    .conditional-fields {
+      margin-left: 26px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border-light);
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 16px 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <h1>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Settings
+      </h1>
+      <div class="top-bar-actions">
+        <button class="back-btn" id="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <h2>Appearance</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label">Theme</span>
+          <div class="theme-toggle">
+            <button class="theme-btn" data-theme="light" title="Light">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="theme-btn" data-theme="dark" title="Dark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="theme-btn" data-theme="system" title="System">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <h2>Behavior</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label">Default project tag</span>
+          <input type="text" id="defaultProject" placeholder="(none)">
+        </div>
+        <div class="field-hint">Pre-fill the project tag field when saving sessions.</div>
+        <div class="field">
+          <input type="checkbox" id="showTagBadgeInTitle">
+          <label for="showTagBadgeInTitle">Show [TAG] prefix in tab title</label>
+        </div>
+        <div class="field-hint no-indent" style="padding-left:26px;">Prepend group name badges (e.g. [Work]) to browser tab titles.</div>
+        <div class="section-divider"></div>
+        <div class="field">
+          <span class="field-label">Multiple tabs scope</span>
+          <select id="multiTabScope">
+            <option value="current_window">Current window only</option>
+            <option value="all_windows">All windows</option>
+          </select>
+        </div>
+        <div class="field-hint">Which tabs are listed when using "Multiple Tabs" mode in the popup.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <h2>Auto-Snapshot</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <input type="checkbox" id="autoSnapshotEnabled">
+          <label for="autoSnapshotEnabled">Enable automatic tab snapshots</label>
+        </div>
+        <div class="field-hint no-indent" style="padding-left:26px;">Periodically save all open tabs as a backup session.</div>
+        <div class="conditional-fields" id="snapshot-fields" style="display:none">
+          <div class="field">
+            <span class="field-label">Interval (minutes)</span>
+            <input type="number" id="autoSnapshotInterval" min="1" max="1440" value="30">
+          </div>
+          <div class="field-hint">How often to take automatic snapshots (1–1440 minutes).</div>
+          <div class="field">
+            <span class="field-label">Max snapshots kept</span>
+            <input type="number" id="maxAutoSnapshots" min="1" max="100" value="10">
+          </div>
+          <div class="field-hint">Older auto-snapshots are purged when this limit is reached.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <h2>Trash &amp; Archive</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label">Retention (days)</span>
+          <input type="number" id="trashRetentionDays" min="1" max="365" value="15">
+        </div>
+        <div class="field-hint">Deleted groups are automatically purged after this many days.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+        <h2>Extension Badge</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <input type="checkbox" id="showBadgeCount" checked>
+          <label for="showBadgeCount">Show open tab count on extension icon</label>
+        </div>
+        <div class="field-hint no-indent" style="padding-left:26px;">Display a real-time tab count badge on the toolbar icon.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <h2>Tab Aging</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <input type="checkbox" id="tabAgingEnabled" checked>
+          <label for="tabAgingEnabled">Show tab aging indicators</label>
+        </div>
+        <div class="field-hint no-indent" style="padding-left:26px;">Visually mark tabs that haven't been visited recently.</div>
+        <div class="conditional-fields" id="aging-fields">
+          <div class="field">
+            <span class="field-label">Aging threshold (days)</span>
+            <input type="number" id="tabAgingDays" min="1" max="90" value="3">
+          </div>
+          <div class="field-hint">Tabs idle for this many days are marked as warm, 2× as stale, 3× as ancient.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <h2>Dashboard Display</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <input type="checkbox" id="showDuplicateBadges" checked>
+          <label for="showDuplicateBadges">Highlight duplicate tabs</label>
+        </div>
+        <div class="field-hint no-indent" style="padding-left:26px;">Show a "DUP" badge and yellow border on duplicate open tabs.</div>
+        <div class="section-divider"></div>
+        <div class="field">
+          <span class="field-label">Card tab preview</span>
+          <input type="number" id="cardPreviewCount" min="1" max="10" value="4">
+        </div>
+        <div class="field-hint">Number of tab chips shown on each group card (1–10).</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <h2>Notifications</h2>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <span class="field-label">Toast duration (sec)</span>
+          <input type="number" id="toastDuration" min="0.5" max="10" step="0.5" value="2.8">
+        </div>
+        <div class="field-hint">How long toast messages remain visible (0.5–10 seconds).</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <h2>Kanban Board States</h2>
+      </div>
+      <div class="card-body">
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Configure up to 5 workflow states for your tab group board. Drag groups between these columns on the dashboard.</p>
+        <div id="kanban-states-list"></div>
+        <button class="btn btn-secondary" id="add-state-btn" style="margin-top:10px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          Add State
+        </button>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="btn btn-primary" id="save-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Save Settings
+      </button>
+      <div id="status" class="status"></div>
+    </div>
+  </div>
+
+  <script src="theme.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

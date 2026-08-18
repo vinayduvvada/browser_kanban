@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Manager",
+  "short_name": "Tab Manager",
+  "version": "1.0.0",
+  "description": "Manage browser tabs with drag-and-drop tag groups. Save, restore, and organize tab sessions.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {},
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "options_page": "options.html"
+}

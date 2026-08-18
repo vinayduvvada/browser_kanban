@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Manager</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --radius: 8px;
+    }
+
+    [data-theme="dark"] {
+      --primary: #818cf8;
+      --primary-hover: #6366f1;
+      --primary-light: rgba(129,140,248,0.12);
+      --surface: #1e293b;
+      --surface-alt: #0f172a;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --success: #34d399;
+      --danger: #f87171;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-alt);
+      flex-shrink: 0;
+    }
+    .sidebar-header h1 {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sidebar-header h1 svg { flex-shrink: 0; color: var(--primary); }
+    .header-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 1px 7px;
+      border-radius: 10px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .header-actions { display: flex; gap: 4px; }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .icon-btn:hover { background: var(--border); color: var(--text); }
+    .icon-btn svg { width: 16px; height: 16px; }
+
+    /* ── Scrollable body ── */
+    .sidebar-body {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-body::-webkit-scrollbar { width: 4px; }
+    .sidebar-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── Sections ── */
+    .section {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title svg { width: 12px; height: 12px; }
+
+    /* ── Form ── */
+    .form-row { margin-bottom: 8px; }
+    .form-row:last-child { margin-bottom: 0; }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      outline: none;
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    input[type="text"]::placeholder { color: var(--text-muted); }
+    select option:disabled { color: var(--text-muted); }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      width: 100%;
+      padding: 9px 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary svg { width: 14px; height: 14px; }
+    .btn-primary .shortcut-hint {
+      font-size: 10px;
+      opacity: 0.7;
+      margin-left: 4px;
+    }
+
+    @keyframes saveFlash {
+      0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+      100% { box-shadow: none; }
+    }
+    .btn-primary.saved {
+      background: var(--success);
+      animation: saveFlash 0.6s ease;
+    }
+
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-sm:hover { background: var(--border); color: var(--text); }
+
+    /* ── Tag Group grid ── */
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-right: 2px;
+    }
+
+    .tag-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 6px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-alt);
+      text-align: center;
+      min-width: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tag-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79,70,229,0.1);
+    }
+    .tag-item:active { transform: translateY(0); }
+
+    .tag-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tag-icon svg { width: 14px; height: 14px; }
+    .tag-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .tag-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 1px 8px;
+      border-radius: 10px;
+    }
+
+    /* ── Footer ── */
+    .sidebar-footer {
+      padding: 8px 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .footer-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .footer-btn:hover { background: var(--border); color: var(--text); }
+    .footer-btn svg { width: 14px; height: 14px; }
+
+    /* ── Status ── */
+    .status {
+      font-size: 12px;
+      color: var(--success);
+      min-height: 16px;
+      margin-top: 6px;
+    }
+    .status.error { color: var(--danger); }
+
+    .empty {
+      padding: 20px 12px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .empty svg { margin-bottom: 8px; color: var(--text-muted); opacity: 0.5; }
+    .empty .empty-hint {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--primary);
+      opacity: 0.8;
+    }
+
+    /* ── Mode Toggle ── */
+    .mode-toggle {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 5px 0;
+      font-size: 12px;
+      font-weight: 500;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .mode-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+    .mode-btn svg { width: 12px; height: 12px; }
+
+    /* ── Multi-tab list ── */
+    .tab-list-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .tab-list-toolbar-left { display: flex; gap: 4px; }
+    .selected-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 1px 8px;
+      border-radius: 10px;
+    }
+    .btn-xs {
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-xs:hover { background: var(--border); color: var(--text); }
+
+    .tab-list {
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-alt);
+      margin-bottom: 8px;
+    }
+    .tab-list::-webkit-scrollbar { width: 4px; }
+    .tab-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .tab-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .tab-item:last-child { border-bottom: none; }
+    .tab-item:hover { background: var(--primary-light); }
+    .tab-item.checked { background: var(--primary-light); }
+
+    .tab-item input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .tab-favicon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      object-fit: contain;
+    }
+    .tab-favicon-placeholder {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-favicon-placeholder svg { width: 10px; height: 10px; color: var(--text-muted); }
+    .tab-title {
+      font-size: 12px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
+    }
+    .tab-list-empty {
+      padding: 14px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Group search ── */
+    .group-search {
+      width: 100%;
+      padding: 6px 10px 6px 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 12px;
+      outline: none;
+      background: var(--surface-alt)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") 8px center no-repeat;
+      color: var(--text);
+      font-family: inherit;
+      transition: border-color 0.15s;
+      margin-bottom: 8px;
+    }
+    .group-search:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    .group-search::placeholder { color: var(--text-muted); }
+    .tag-item.hidden-by-search { display: none; }
+    .tag-item.search-match { border-color: var(--primary); }
+    .no-match-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 6px 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar-header">
+    <h1>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+      Tab Manager
+      <span id="tab-count-badge" class="header-badge" title="Open tabs">0</span>
+    </h1>
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-cycle-btn" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar-body">
+    <div class="section">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Add to Group
+      </div>
+
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="mode-single-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          Current Tab
+        </button>
+        <button class="mode-btn" id="mode-multi-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="9" height="7" rx="1"/><rect x="13" y="3" width="9" height="7" rx="1"/><rect x="2" y="14" width="9" height="7" rx="1"/><rect x="13" y="14" width="9" height="7" rx="1"/></svg>
+          <span id="multi-mode-label">This Window</span>
+        </button>
+      </div>
+
+      <!-- Multi-tab selection (hidden by default) -->
+      <div id="multi-tab-section" style="display:none">
+        <div class="tab-list-toolbar">
+          <div class="tab-list-toolbar-left">
+            <button class="btn-xs" id="select-all-btn">Select All</button>
+            <button class="btn-xs" id="clear-sel-btn">Clear</button>
+          </div>
+          <span id="selected-count" class="selected-count">0 selected</span>
+        </div>
+        <div class="tab-list" id="tab-list"></div>
+      </div>
+
+      <div class="form-row">
+        <select id="group-select"></select>
+      </div>
+      <div id="new-group-row" class="form-row" style="display:none">
+        <input type="text" id="new-group-input" placeholder="New group name..." maxlength="60">
+      </div>
+      <button class="btn-primary" id="save-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        <span id="save-btn-label">Add Page to Group</span>
+        <span class="shortcut-hint">(Ctrl+S)</span>
+      </button>
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        Tag Groups
+      </div>
+      <input type="text" class="group-search" id="group-search" placeholder="Search groups..." style="display:none">
+      <div id="tag-groups"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="footer-btn" id="dashboard-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+  </div>
+
+  <script src="theme.js"></script>
+  <script src="sidebar.js"></script>
+</body>
+</html>
