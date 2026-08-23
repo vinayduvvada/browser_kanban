@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Tab Manager",
-  "short_name": "Tab Manager",
+  "name": "Browser Kanban",
+  "short_name": "Browser Kanban",
   "version": "1.0.0",
   "description": "Manage browser tabs with drag-and-drop tag groups. Save, restore, and organize tab sessions.",
   "permissions": [
@@ -17,7 +17,18 @@
   "background": {
     "service_worker": "background.js"
   },
-  "action": {},
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "side_panel": {
     "default_path": "sidebar.html"
   },

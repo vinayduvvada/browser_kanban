@@ -1,4 +1,4 @@
-# Testing Guide — Tab Manager
+# Testing Guide — Browser Kanban
 
 ## Overview
 
@@ -126,7 +126,7 @@ Running 50 tests using 1 worker
   ✓ Tag Groups — Import & Export › EXPORT_TAG_GROUPS returns all groups and an exportedAt timestamp
   ✓ Sessions — DELETE_SESSION › deletes a session by id
   ✓ Sessions — IMPORT_SESSIONS › imports sessions that do not already exist
-  ✓ Sidebar — empty state › renders the Tab Manager heading
+  ✓ Sidebar — empty state › renders the Browser Kanban heading
   ✓ Sidebar — tag group rendering › renders a card for each tag group
   ...
 
@@ -194,7 +194,7 @@ The sidebar runs as a regular extension page (`sidebar.html`). The `openSidebar(
 ## Key Architectural Notes for Tests
 
 ### Storage
-The Tab Manager uses **`chrome.storage.local`** (not `sync`) for all extension data — sessions, tag groups, settings, group notes, and tab aging timestamps. The `extensionHelper.js` seeds and reads from `local` accordingly.
+The Browser Kanban uses **`chrome.storage.local`** (not `sync`) for all extension data — sessions, tag groups, settings, group notes, and tab aging timestamps. The `extensionHelper.js` seeds and reads from `local` accordingly.
 
 ### Service Worker Messages
 All business logic is driven through the message router in `background.js`. Integration tests send messages via `serviceWorker.evaluate(() => chrome.runtime.sendMessage(...))` and assert the `{ ok, ... }` response shape.

@@ -25,7 +25,9 @@ const SETTINGS_DEFAULTS = {
   tabAgingEnabled: true,
   tabAgingDays: 3,
   // Popup: Multiple Tabs scope
-  multiTabScope: 'current_window'
+  multiTabScope: 'current_window',
+  // Action click mode: 'sidebar' or 'popup'
+  popupMode: 'sidebar'
 };
 
 const ALARM_NAME = 'tab-session-auto-snapshot';
@@ -221,6 +223,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     setupAlarm().catch(console.error);
     applyTagBadgesToAllTabs().catch(console.error);
     updateBadgeCount().catch(console.error);
+    applySidePanelBehavior().catch(console.error);
   }
   if (changes.tagGroups) {
     applyTagBadgesToAllTabs().catch(console.error);
@@ -586,8 +589,22 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 // ── Side Panel ────────────────────────────────────────────────────────
-chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
+async function applySidePanelBehavior() {
+  const settings = await getSettings();
+  if (settings.popupMode === 'popup') {
+    await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
+  } else {
+    await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
+  }
+}
 
-chrome.action.onClicked.addListener((tab) => {
-  chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {});
+applySidePanelBehavior().catch(() => {});
+
+chrome.action.onClicked.addListener(async (tab) => {
+  const settings = await getSettings();
+  if (settings.popupMode === 'popup') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('popup.html') }).catch(() => {});
+  } else {
+    chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {});
+  }
 });

@@ -16,12 +16,12 @@ test.beforeEach(async () => {
 });
 
 test.describe('Sidebar — empty state', () => {
-  test('renders the Tab Manager heading', async () => {
+  test('renders the Browser Kanban heading', async () => {
     await seedStorage(serviceWorker, { tagGroups: {}, settings: {} });
 
     const page = await openSidebar(context, extensionId);
     const heading = page.locator('.sidebar-header h1');
-    await expect(heading).toContainText('Tab Manager', { timeout: 5000 });
+    await expect(heading).toContainText('Browser Kanban', { timeout: 5000 });
     await page.close();
   });
 

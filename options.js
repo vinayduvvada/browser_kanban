@@ -17,7 +17,8 @@ const SETTINGS_DEFAULTS = {
   toastDurationMs: 2800,
   tabAgingEnabled: true,
   tabAgingDays: 3,
-  multiTabScope: 'current_window'
+  multiTabScope: 'current_window',
+  popupMode: 'sidebar'
 };
 
 const MAX_STATES = 5;
@@ -52,6 +53,23 @@ const toastDurationEl = document.getElementById('toastDuration');
 
 // Elements — Popup Behavior
 const multiTabScopeEl = document.getElementById('multiTabScope');
+
+// Elements — Popup Mode Toggle
+const popupModeToggleEl = document.getElementById('popup-mode-toggle');
+let currentPopupMode = 'sidebar';
+
+function updatePopupModeButtons() {
+  popupModeToggleEl.querySelectorAll('.theme-btn[data-mode]').forEach(function (btn) {
+    btn.classList.toggle('active', btn.dataset.mode === currentPopupMode);
+  });
+}
+
+popupModeToggleEl.addEventListener('click', function (e) {
+  var btn = e.target.closest('.theme-btn[data-mode]');
+  if (!btn) return;
+  currentPopupMode = btn.dataset.mode;
+  updatePopupModeButtons();
+});
 
 // Elements — Kanban & Save
 const saveBtnEl = document.getElementById('save-btn');
@@ -159,6 +177,10 @@ async function load() {
   // Popup Behavior
   multiTabScopeEl.value = s.multiTabScope || 'current_window';
 
+  // Popup Mode
+  currentPopupMode = s.popupMode || 'sidebar';
+  updatePopupModeButtons();
+
   // Kanban States
   currentStates = (s.kanbanStates && s.kanbanStates.length)
     ? s.kanbanStates.map(function (st) { return { id: st.id, name: st.name, color: st.color }; })
@@ -230,7 +252,8 @@ saveBtnEl.addEventListener('click', async () => {
     toastDurationMs: Math.round(toastSec * 1000),
     tabAgingEnabled: tabAgingEnabledEl.checked,
     tabAgingDays: agingDays,
-    multiTabScope: multiTabScopeEl.value
+    multiTabScope: multiTabScopeEl.value,
+    popupMode: currentPopupMode
   };
 
   await chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', settings });

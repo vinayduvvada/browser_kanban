@@ -4,7 +4,7 @@ const path = require('path');
 const EXTENSION_PATH = path.resolve(__dirname, '../../..');
 
 /**
- * Launches a persistent Chrome context with the Tab Manager extension loaded.
+ * Launches a persistent Chrome context with the Browser Kanban extension loaded.
  * @returns {{ context: import('@playwright/test').BrowserContext, serviceWorker: import('@playwright/test').Worker, extensionId: string }}
  */
 async function launchWithExtension() {

@@ -1,5 +1,5 @@
 /**
- * Theme manager for Tab Manager extension.
+ * Theme manager for Browser Kanban extension.
  * Supports 'light', 'dark', and 'system' modes.
  * Persists selection via chrome.storage.sync.
  */

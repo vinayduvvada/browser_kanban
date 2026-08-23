@@ -1,7 +1,7 @@
 {
   "name": "tab-manager",
   "version": "1.0.0",
-  "description": "Test suite for the Tab Manager Chrome extension",
+  "description": "Test suite for the Browser Kanban Chrome extension",
   "private": true,
   "scripts": {
     "test:unit": "jest --config jest.config.js",
