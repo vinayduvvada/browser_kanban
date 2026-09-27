@@ -58,11 +58,11 @@ function renderArchiveList() {
 
   if (!archivedGroups.length) {
     container.innerHTML =
-      '<div class="archive-empty">' +
+        '<div class="archive-empty">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>' +
         '<div>No archived groups</div>' +
         '<div style="margin-top:4px;font-size:12px;color:var(--text-muted)">Archive a tag group from the Dashboard to see it here.</div>' +
-      '</div>';
+        '</div>';
     return;
   }
 
@@ -70,37 +70,37 @@ function renderArchiveList() {
     var tabsPreview = '';
     if (item.tabs && item.tabs.length) {
       tabsPreview = '<div class="archive-item-tabs" id="archive-tabs-' + idx + '">' +
-        item.tabs.map(function (tab) {
-          var favicon = tab.favIconUrl
-            ? '<img src="' + escapeHtml(tab.favIconUrl) + '" onerror="this.style.display=\'none\'">'
-            : '';
-          return '<div class="archive-tab">' +
-            favicon +
-            '<span class="tab-title">' + escapeHtml(tab.title || tab.url) + '</span>' +
+          item.tabs.map(function (tab) {
+            var favicon = tab.favIconUrl
+                ? '<img src="' + escapeHtml(tab.favIconUrl) + '" onerror="this.style.display=\'none\'">'
+                : '';
+            return '<div class="archive-tab">' +
+                favicon +
+                '<span class="tab-title">' + escapeHtml(tab.title || tab.url) + '</span>' +
+                '</div>';
+          }).join('') +
           '</div>';
-        }).join('') +
-      '</div>';
     }
 
     return '<div class="archive-item" data-index="' + idx + '">' +
-      '<div class="archive-item-icon">' + ICONS.archive + '</div>' +
-      '<div class="archive-item-info">' +
+        '<div class="archive-item-icon">' + ICONS.archive + '</div>' +
+        '<div class="archive-item-info">' +
         '<div class="archive-item-name">' + escapeHtml(item.name) + '</div>' +
         '<div class="archive-item-meta">' +
-          '<span>' + (item.tabs ? item.tabs.length : 0) + ' tab' + ((item.tabs && item.tabs.length !== 1) ? 's' : '') + '</span>' +
-          '<span class="separator">&middot;</span>' +
-          '<span>Archived ' + timeAgo(item.archivedAt) + '</span>' +
-          '<span class="separator">&middot;</span>' +
-          '<span>' + formatDate(item.archivedAt) + '</span>' +
-          (item.tabs && item.tabs.length ? '<button class="archive-item-toggle" data-index="' + idx + '">Show tabs</button>' : '') +
+        '<span>' + (item.tabs ? item.tabs.length : 0) + ' tab' + ((item.tabs && item.tabs.length !== 1) ? 's' : '') + '</span>' +
+        '<span class="separator">&middot;</span>' +
+        '<span>Archived ' + timeAgo(item.archivedAt) + '</span>' +
+        '<span class="separator">&middot;</span>' +
+        '<span>' + formatDate(item.archivedAt) + '</span>' +
+        (item.tabs && item.tabs.length ? '<button class="archive-item-toggle" data-index="' + idx + '">Show tabs</button>' : '') +
         '</div>' +
         tabsPreview +
-      '</div>' +
-      '<div class="archive-item-actions">' +
+        '</div>' +
+        '<div class="archive-item-actions">' +
         '<button class="archive-restore-btn" data-index="' + idx + '">' + ICONS.undo + ' Restore</button>' +
         '<button class="archive-perma-del-btn" data-index="' + idx + '">Delete</button>' +
-      '</div>' +
-    '</div>';
+        '</div>' +
+        '</div>';
   }).join('');
 
   attachListeners();
@@ -135,9 +135,10 @@ function attachListeners() {
 
         chrome.runtime.sendMessage({ type: 'RESTORE_ARCHIVED_GROUP', index: idx }, function (r) {
           if (r && r.ok) {
-            archivedGroups.splice(idx, 1);
-            renderArchiveList();
-            showToast('"' + (r.restoredName || item.name) + '" restored to the board.');
+            loadData().then(function () {
+              renderArchiveList();
+              showToast('"' + (r.restoredName || item.name) + '" restored to the board.');
+            });
           } else {
             showToast((r && r.error) || 'Restore failed.', true);
           }

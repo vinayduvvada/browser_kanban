@@ -60,8 +60,8 @@ async function getSettings() {
 async function captureCurrentTabs() {
   const tabs = await chrome.tabs.query({ currentWindow: true });
   return tabs
-    .filter(t => t.url && !t.url.startsWith('chrome://') && !t.url.startsWith('chrome-extension://'))
-    .map(t => ({ url: t.url, title: t.title || t.url, favIconUrl: t.favIconUrl || '' }));
+      .filter(t => t.url && !t.url.startsWith('chrome://') && !t.url.startsWith('chrome-extension://'))
+      .map(t => ({ url: t.url, title: t.title || t.url, favIconUrl: t.favIconUrl || '' }));
 }
 
 // ── Session CRUD ──────────────────────────────────────────────────────
@@ -135,8 +135,8 @@ async function deleteProjectSessions(project) {
 async function exportSessions(sessionIds) {
   const { sessions } = await chrome.storage.local.get({ sessions: [] });
   const toExport = sessionIds
-    ? sessions.filter(s => sessionIds.includes(s.id))
-    : sessions;
+      ? sessions.filter(s => sessionIds.includes(s.id))
+      : sessions;
   return { ok: true, data: { sessions: toExport, exportedAt: new Date().toISOString() } };
 }
 
@@ -170,18 +170,19 @@ async function setupAlarm() {
 
 async function autoSnapshot() {
   const settings = await getSettings();
-  await saveSession({
+  const result = await saveSession({
     name: '[Auto] ' + new Date().toLocaleString(),
     project: '',
     isAuto: true
   });
+  if (!result.ok) return;
 
   // Cleanup: keep only maxAutoSnapshots
   const { sessions } = await chrome.storage.local.get({ sessions: [] });
   const autoSessions = sessions.filter(s => s.isAuto);
   if (autoSessions.length > settings.maxAutoSnapshots) {
     const removeIds = new Set(
-      autoSessions.slice(settings.maxAutoSnapshots).map(s => s.id)
+        autoSessions.slice(settings.maxAutoSnapshots).map(s => s.id)
     );
     await chrome.storage.local.set({
       sessions: sessions.filter(s => !removeIds.has(s.id))
@@ -278,8 +279,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       return {
         ok: true,
         tabs: tabs
-          .filter(t => t.url && !t.url.startsWith('chrome://') && !t.url.startsWith('chrome-extension://'))
-          .map(t => ({ id: t.id, url: t.url, title: t.title || t.url, favIconUrl: t.favIconUrl || '', windowId: t.windowId }))
+            .filter(t => t.url && !t.url.startsWith('chrome://') && !t.url.startsWith('chrome-extension://'))
+            .map(t => ({ id: t.id, url: t.url, title: t.title || t.url, favIconUrl: t.favIconUrl || '', windowId: t.windowId }))
       };
     },
     GET_TAG_GROUP_META: async () => {
@@ -295,6 +296,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       const { tagGroupMeta } = await chrome.storage.local.get({ tagGroupMeta: {} });
       const { tagGroupIcons } = await chrome.storage.local.get({ tagGroupIcons: {} });
       const { tagOrder } = await chrome.storage.local.get({ tagOrder: [] });
+      const { taggedTabs } = await chrome.storage.local.get({ taggedTabs: {} });
       const oldName = message.oldName;
       const newName = message.newName;
       if (!oldName || !newName || oldName === newName) return { ok: false, error: 'Invalid names.' };
@@ -305,7 +307,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       if (tagGroupIcons[oldName]) { tagGroupIcons[newName] = tagGroupIcons[oldName]; delete tagGroupIcons[oldName]; }
       const orderIdx = tagOrder.indexOf(oldName);
       if (orderIdx !== -1) tagOrder[orderIdx] = newName;
-      await chrome.storage.local.set({ tagGroups, tagGroupMeta, tagGroupIcons, tagOrder });
+      for (const [url, tag] of Object.entries(taggedTabs)) {
+        if (tag === oldName) taggedTabs[url] = newName;
+      }
+      await chrome.storage.local.set({ tagGroups, tagGroupMeta, tagGroupIcons, tagOrder, taggedTabs });
       const knownTags = Object.keys(tagGroups).filter(t => t !== 'Other').sort();
       await chrome.storage.local.set({ knownTags });
       return { ok: true };
@@ -371,13 +376,13 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         const bScore = (b.active ? 2 : 0) + (b.pinned ? 1 : 0);
         return bScore - aScore;
       });
-      const seen = {};
+      const seen = new Set();
       const toClose = [];
       for (const t of validTabs) {
-        if (seen[t.url]) {
+        if (seen.has(t.url)) {
           toClose.push(t.id);
         } else {
-          seen[t.url] = true;
+          seen.add(t.url);
         }
       }
       if (!toClose.length) return { ok: true, closed: 0 };
@@ -451,7 +456,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     },
     IMPORT_TAG_GROUPS: async () => {
       const d = message.data;
-      if (!d || typeof d.tagGroups !== 'object') return { ok: false, error: 'Invalid import data.' };
+      if (!d || !d.tagGroups || typeof d.tagGroups !== 'object' || Array.isArray(d.tagGroups)) return { ok: false, error: 'Invalid import data.' };
       const { tagGroups, tagGroupMeta, knownTags, groupNotes } = await chrome.storage.local.get({
         tagGroups: {}, tagGroupMeta: {}, knownTags: [], groupNotes: {}
       });
@@ -476,8 +481,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (!handler) return;
 
   handler()
-    .then(result => sendResponse(result))
-    .catch(e => sendResponse({ ok: false, error: e.message || String(e) }));
+      .then(result => sendResponse(result))
+      .catch(e => sendResponse({ ok: false, error: e.message || String(e) }));
 
   return true;
 });

@@ -1,5 +1,5 @@
 {
-  "name": "tab-manager",
+  "name": "browser_kanban",
   "version": "1.0.0",
   "description": "Test suite for the Browser Kanban Chrome extension",
   "private": true,

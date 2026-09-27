@@ -4,7 +4,7 @@
  */
 
 function importTagGroupsData(existing, d) {
-  if (!d || typeof d.tagGroups !== 'object') {
+  if (!d || !d.tagGroups || typeof d.tagGroups !== 'object' || Array.isArray(d.tagGroups)) {
     return { ok: false, error: 'Invalid import data.' };
   }
   const tagGroups = Object.assign({}, existing.tagGroups);

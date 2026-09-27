@@ -151,6 +151,7 @@ async function loadData() {
       if (!tabs.length) { setStatus('"' + tagName + '" has no tabs.', true); return; }
       var urls = tabs.map(function (t) { return t.url; });
       chrome.windows.create({ url: urls[0], focused: true }, function (w) {
+        if (!w) { setStatus('Failed to open window for "' + tagName + '".', true); return; }
         for (var k = 1; k < urls.length; k++) {
           chrome.tabs.create({ windowId: w.id, url: urls[k], active: false });
         }

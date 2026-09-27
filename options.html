@@ -325,222 +325,222 @@
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div class="top-bar-inner">
-      <h1>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-        Settings
-      </h1>
-      <div class="top-bar-actions">
-        <button class="back-btn" id="back-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          Back to Dashboard
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="main-content">
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <h2>Appearance</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <span class="field-label">Theme</span>
-          <div class="theme-toggle">
-            <button class="theme-btn" data-theme="light" title="Light">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            </button>
-            <button class="theme-btn" data-theme="dark" title="Dark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-            <button class="theme-btn" data-theme="system" title="System">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </button>
-          </div>
-        </div>
-        <div class="section-divider"></div>
-        <div class="field">
-          <span class="field-label">Toolbar icon opens</span>
-          <div class="theme-toggle" id="popup-mode-toggle">
-            <button class="theme-btn" data-mode="sidebar" title="Open as sidebar panel">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-              <span style="font-size:12px;margin-left:4px;">Sidebar</span>
-            </button>
-            <button class="theme-btn" data-mode="popup" title="Open as popup tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 22 2 22 7"/><line x1="12" y1="12" x2="22" y2="2"/></svg>
-              <span style="font-size:12px;margin-left:4px;">Popup tab</span>
-            </button>
-          </div>
-        </div>
-        <div class="field-hint">Choose whether clicking the extension icon opens a sidebar panel or a new popup tab.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-        <h2>Behavior</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <span class="field-label">Default project tag</span>
-          <input type="text" id="defaultProject" placeholder="(none)">
-        </div>
-        <div class="field-hint">Pre-fill the project tag field when saving sessions.</div>
-        <div class="field">
-          <input type="checkbox" id="showTagBadgeInTitle">
-          <label for="showTagBadgeInTitle">Show [TAG] prefix in tab title</label>
-        </div>
-        <div class="field-hint no-indent" style="padding-left:26px;">Prepend group name badges (e.g. [Work]) to browser tab titles.</div>
-        <div class="section-divider"></div>
-        <div class="field">
-          <span class="field-label">Multiple tabs scope</span>
-          <select id="multiTabScope">
-            <option value="current_window">Current window only</option>
-            <option value="all_windows">All windows</option>
-          </select>
-        </div>
-        <div class="field-hint">Which tabs are listed when using "Multiple Tabs" mode in the popup.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <h2>Auto-Snapshot</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <input type="checkbox" id="autoSnapshotEnabled">
-          <label for="autoSnapshotEnabled">Enable automatic tab snapshots</label>
-        </div>
-        <div class="field-hint no-indent" style="padding-left:26px;">Periodically save all open tabs as a backup session.</div>
-        <div class="conditional-fields" id="snapshot-fields" style="display:none">
-          <div class="field">
-            <span class="field-label">Interval (minutes)</span>
-            <input type="number" id="autoSnapshotInterval" min="1" max="1440" value="30">
-          </div>
-          <div class="field-hint">How often to take automatic snapshots (1–1440 minutes).</div>
-          <div class="field">
-            <span class="field-label">Max snapshots kept</span>
-            <input type="number" id="maxAutoSnapshots" min="1" max="100" value="10">
-          </div>
-          <div class="field-hint">Older auto-snapshots are purged when this limit is reached.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        <h2>Trash &amp; Archive</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <span class="field-label">Retention (days)</span>
-          <input type="number" id="trashRetentionDays" min="1" max="365" value="15">
-        </div>
-        <div class="field-hint">Deleted groups are automatically purged after this many days.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-        <h2>Extension Badge</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <input type="checkbox" id="showBadgeCount" checked>
-          <label for="showBadgeCount">Show open tab count on extension icon</label>
-        </div>
-        <div class="field-hint no-indent" style="padding-left:26px;">Display a real-time tab count badge on the toolbar icon.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <h2>Tab Aging</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <input type="checkbox" id="tabAgingEnabled" checked>
-          <label for="tabAgingEnabled">Show tab aging indicators</label>
-        </div>
-        <div class="field-hint no-indent" style="padding-left:26px;">Visually mark tabs that haven't been visited recently.</div>
-        <div class="conditional-fields" id="aging-fields">
-          <div class="field">
-            <span class="field-label">Aging threshold (days)</span>
-            <input type="number" id="tabAgingDays" min="1" max="90" value="3">
-          </div>
-          <div class="field-hint">Tabs idle for this many days are marked as warm, 2× as stale, 3× as ancient.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        <h2>Dashboard Display</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <input type="checkbox" id="showDuplicateBadges" checked>
-          <label for="showDuplicateBadges">Highlight duplicate tabs</label>
-        </div>
-        <div class="field-hint no-indent" style="padding-left:26px;">Show a "DUP" badge and yellow border on duplicate open tabs.</div>
-        <div class="section-divider"></div>
-        <div class="field">
-          <span class="field-label">Card tab preview</span>
-          <input type="number" id="cardPreviewCount" min="1" max="10" value="4">
-        </div>
-        <div class="field-hint">Number of tab chips shown on each group card (1–10).</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <h2>Notifications</h2>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <span class="field-label">Toast duration (sec)</span>
-          <input type="number" id="toastDuration" min="0.5" max="10" step="0.5" value="2.8">
-        </div>
-        <div class="field-hint">How long toast messages remain visible (0.5–10 seconds).</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        <h2>Kanban Board States</h2>
-      </div>
-      <div class="card-body">
-        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Configure up to 5 workflow states for your tab group board. Drag groups between these columns on the dashboard.</p>
-        <div id="kanban-states-list"></div>
-        <button class="btn btn-secondary" id="add-state-btn" style="margin-top:10px;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
-          Add State
-        </button>
-      </div>
-    </div>
-
-    <div class="save-row">
-      <button class="btn btn-primary" id="save-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Save Settings
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <h1>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      Settings
+    </h1>
+    <div class="top-bar-actions">
+      <button class="back-btn" id="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Dashboard
       </button>
-      <div id="status" class="status"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <h2>Appearance</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <span class="field-label">Theme</span>
+        <div class="theme-toggle">
+          <button class="theme-btn" data-theme="light" title="Light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+          <button class="theme-btn" data-theme="dark" title="Dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <button class="theme-btn" data-theme="system" title="System">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="section-divider"></div>
+      <div class="field">
+        <span class="field-label">Toolbar icon opens</span>
+        <div class="theme-toggle" id="popup-mode-toggle">
+          <button class="theme-btn" data-mode="sidebar" title="Open as sidebar panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <span style="font-size:12px;margin-left:4px;">Sidebar</span>
+          </button>
+          <button class="theme-btn" data-mode="popup" title="Open as popup tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 22 2 22 7"/><line x1="12" y1="12" x2="22" y2="2"/></svg>
+            <span style="font-size:12px;margin-left:4px;">Popup tab</span>
+          </button>
+        </div>
+      </div>
+      <div class="field-hint">Choose whether clicking the extension icon opens a sidebar panel or a new popup tab.</div>
     </div>
   </div>
 
-  <script src="theme.js"></script>
-  <script src="options.js"></script>
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      <h2>Behavior</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <span class="field-label">Default project tag</span>
+        <input type="text" id="defaultProject" placeholder="(none)">
+      </div>
+      <div class="field-hint">Pre-fill the project tag field when saving sessions.</div>
+      <div class="field">
+        <input type="checkbox" id="showTagBadgeInTitle">
+        <label for="showTagBadgeInTitle">Show [TAG] prefix in tab title</label>
+      </div>
+      <div class="field-hint no-indent" style="padding-left:26px;">Prepend group name badges (e.g. [Work]) to browser tab titles.</div>
+      <div class="section-divider"></div>
+      <div class="field">
+        <span class="field-label">Multiple tabs scope</span>
+        <select id="multiTabScope">
+          <option value="current_window">Current window only</option>
+          <option value="all_windows">All windows</option>
+        </select>
+      </div>
+      <div class="field-hint">Which tabs are listed when using "Multiple Tabs" mode in the popup.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h2>Auto-Snapshot</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <input type="checkbox" id="autoSnapshotEnabled">
+        <label for="autoSnapshotEnabled">Enable automatic tab snapshots</label>
+      </div>
+      <div class="field-hint no-indent" style="padding-left:26px;">Periodically save all open tabs as a backup session.</div>
+      <div class="conditional-fields" id="snapshot-fields" style="display:none">
+        <div class="field">
+          <span class="field-label">Interval (minutes)</span>
+          <input type="number" id="autoSnapshotInterval" min="1" max="1440" value="30">
+        </div>
+        <div class="field-hint">How often to take automatic snapshots (1–1440 minutes).</div>
+        <div class="field">
+          <span class="field-label">Max snapshots kept</span>
+          <input type="number" id="maxAutoSnapshots" min="1" max="100" value="10">
+        </div>
+        <div class="field-hint">Older auto-snapshots are purged when this limit is reached.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      <h2>Trash &amp; Archive</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <span class="field-label">Retention (days)</span>
+        <input type="number" id="trashRetentionDays" min="1" max="365" value="15">
+      </div>
+      <div class="field-hint">Deleted groups are automatically purged after this many days.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+      <h2>Extension Badge</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <input type="checkbox" id="showBadgeCount" checked>
+        <label for="showBadgeCount">Show open tab count on extension icon</label>
+      </div>
+      <div class="field-hint no-indent" style="padding-left:26px;">Display a real-time tab count badge on the toolbar icon.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <h2>Tab Aging</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <input type="checkbox" id="tabAgingEnabled" checked>
+        <label for="tabAgingEnabled">Show tab aging indicators</label>
+      </div>
+      <div class="field-hint no-indent" style="padding-left:26px;">Visually mark tabs that haven't been visited recently.</div>
+      <div class="conditional-fields" id="aging-fields">
+        <div class="field">
+          <span class="field-label">Aging threshold (days)</span>
+          <input type="number" id="tabAgingDays" min="1" max="90" value="3">
+        </div>
+        <div class="field-hint">Tabs idle for this many days are marked as warm, 2× as stale, 3× as ancient.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <h2>Dashboard Display</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <input type="checkbox" id="showDuplicateBadges" checked>
+        <label for="showDuplicateBadges">Highlight duplicate tabs</label>
+      </div>
+      <div class="field-hint no-indent" style="padding-left:26px;">Show a "DUP" badge and yellow border on duplicate open tabs.</div>
+      <div class="section-divider"></div>
+      <div class="field">
+        <span class="field-label">Card tab preview</span>
+        <input type="number" id="cardPreviewCount" min="1" max="10" value="4">
+      </div>
+      <div class="field-hint">Number of tab chips shown on each group card (1–10).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <h2>Notifications</h2>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <span class="field-label">Toast duration (sec)</span>
+        <input type="number" id="toastDuration" min="0.5" max="10" step="0.5" value="2.8">
+      </div>
+      <div class="field-hint">How long toast messages remain visible (0.5–10 seconds).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <h2>Kanban Board States</h2>
+    </div>
+    <div class="card-body">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Configure up to 5 workflow states for your tab group board. Drag groups between these columns on the dashboard.</p>
+      <div id="kanban-states-list"></div>
+      <button class="btn btn-secondary" id="add-state-btn" style="margin-top:10px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        Add State
+      </button>
+    </div>
+  </div>
+
+  <div class="save-row">
+    <button class="btn btn-primary" id="save-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Save Settings
+    </button>
+    <div id="status" class="status"></div>
+  </div>
+</div>
+
+<script src="theme.js"></script>
+<script src="options.js"></script>
 </body>
 </html>

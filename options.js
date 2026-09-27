@@ -101,14 +101,14 @@ function renderStates() {
     var row = document.createElement('div');
     row.className = 'state-row';
     row.innerHTML =
-      '<span class="state-num">' + (idx + 1) + '</span>' +
-      '<input type="text" class="state-name-input" value="' + (state.name || '') + '" placeholder="State name..." maxlength="30">' +
-      '<input type="color" class="state-color-input" value="' + (state.color || '#94a3b8') + '" title="Pick a color">' +
-      (currentStates.length > 1
-        ? '<button class="state-remove-btn" data-index="' + idx + '" title="Remove state">' +
+        '<span class="state-num">' + (idx + 1) + '</span>' +
+        '<input type="text" class="state-name-input" value="' + (state.name || '') + '" placeholder="State name..." maxlength="30">' +
+        '<input type="color" class="state-color-input" value="' + (state.color || '#94a3b8') + '" title="Pick a color">' +
+        (currentStates.length > 1
+            ? '<button class="state-remove-btn" data-index="' + idx + '" title="Remove state">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
-          '</button>'
-        : '');
+            '</button>'
+            : '');
     statesListEl.appendChild(row);
   });
 
@@ -183,8 +183,8 @@ async function load() {
 
   // Kanban States
   currentStates = (s.kanbanStates && s.kanbanStates.length)
-    ? s.kanbanStates.map(function (st) { return { id: st.id, name: st.name, color: st.color }; })
-    : SETTINGS_DEFAULTS.kanbanStates.slice();
+      ? s.kanbanStates.map(function (st) { return { id: st.id, name: st.name, color: st.color }; })
+      : SETTINGS_DEFAULTS.kanbanStates.slice();
   renderStates();
 }
 

@@ -44,7 +44,7 @@ node --version   # should print v18.x.x or higher
 Run this once from the extension directory:
 
 ```bash
-cd /path/to/tab_manager
+cd /path/to/browser_kanban
 npm install
 ```
 
@@ -148,7 +148,7 @@ This runs `test:unit` first (fast, no browser), then `test:integration`.
 ## Troubleshooting
 
 ### "Cannot find module '../../background.js'"
-Make sure you are running Jest from the `tab_manager/` directory, or that your `package.json` is in that directory.
+Make sure you are running Jest from the `browser_kanban/` directory, or that your `package.json` is in that directory.
 
 ### Integration tests fail with "Extension not found" / no service worker
 - Verify Chrome is installed and accessible.
