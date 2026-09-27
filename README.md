@@ -1,6 +1,6 @@
 # Browser Kanban
 
-A Chrome extension to manage browser tabs with a **Kanban board**, **project grouping**, **drag-and-drop**, and **workflow states**.
+Organize open Chrome tabs on a visual board. Drag tabs into project groups, save sessions, and find what you need faster.
 
 ![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue?logo=google-chrome)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-green)

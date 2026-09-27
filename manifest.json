@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Browser Kanban",
+  "name": "Browser Kanban – Visual Tab Manager",
   "short_name": "Browser Kanban",
   "version": "1.1.0",
-  "description": "Manage browser tabs with drag-and-drop tag groups. Save, restore, and organize tab sessions.",
+  "description": "Organize open Chrome tabs on a visual board. Drag tabs into project groups, save sessions, and find what you need faster.",
   "permissions": [
     "tabs",
     "storage",
